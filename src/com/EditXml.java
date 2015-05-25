@@ -37,6 +37,10 @@ public class EditXml {
 		this.app_id = app_id;
 	}
 
+	// public void getPackage() {
+	//
+	// return;
+	// }
 	// 找到程序入口
 	public String getMainActivity(String fileName) {
 		System.out.println("i can get the name of mainactivity!");
@@ -81,6 +85,9 @@ public class EditXml {
 		try {
 			org.dom4j.Document coc = sar.read(new File(name));
 			org.dom4j.Element element = coc.getRootElement();
+			// 顺便获取包名
+			Attribute attrPackage = element.attribute("package");
+			setPackageName(attrPackage.getText());
 			org.dom4j.Element eve = element.element("application");
 			// eve.addNamespace("android", "");
 			@SuppressWarnings("unchecked")

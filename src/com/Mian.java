@@ -26,8 +26,16 @@ public class Mian {
 		}
 		// dom4j出现问题，待改
 		// 如果没有，直接编辑smali
+		String PackageName = edi.getPackageName();
 		String MainActivity = edi.getMainActivity(fileDir
 				+ "\\Androidmanifest.xml");
+		if (MainActivity.contains(".")) {
+			if (MainActivity.split("\\.")[0].equals("")) {
+				MainActivity = PackageName + MainActivity;
+			}
+		} else {
+			MainActivity = PackageName + "." + MainActivity;
+		}
 		String activityDir = eds.dotToDir(MainActivity);// 将程序入口改成目录
 		eds.smaliEdit(fileDir + "\\smali\\" + activityDir + ".smali");// 编辑smali
 		zip.zippo(fileDir);// 打包
