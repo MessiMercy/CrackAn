@@ -3,15 +3,15 @@ package com;
 import java.io.File;
 
 public class Mian {
-	// Ä¿Ç°ÔÚ½âÎöxml·½Ãæ»¹ÓĞÎÊÌâ
+	
 	public static void main(String[] args) {
-		// TODO ×Ô¶¯Éú³ÉµÄ·½·¨´æ¸ù
+		// TODO è‡ªåŠ¨ç”Ÿæˆçš„æ–¹æ³•å­˜æ ¹
 		UnZipApk unz = new UnZipApk();
 		EditXml edi = new EditXml();
 		EditValues val = new EditValues();
 		EditSmali eds = new EditSmali();
 		ZipApk zip = new ZipApk();
-		unz.AntiApk();// ½âÑ¹APK
+		unz.AntiApk();// è§£å‹APK
 		String fileName = unz.fileName;
 		String fileDir = fileName.substring(0, fileName.length() - 4);
 		edi.dom4J(fileDir + "\\AndroidManifest.xml");
@@ -19,13 +19,14 @@ public class Mian {
 		String returnValue = edi.getApp_id();
 		if (returnValue != null
 				&& (!returnValue.contains("app_id") || !returnValue
-						.contains("APP_ID"))) {// Èç¹û·¢ÏÖÓĞapp_id¾ÍĞŞ¸Ävalue
+						.contains("APP_ID"))) {// å¦‚æœå‘ç°æœ‰app_idå°±ä¿®æ”¹value
 			val.func(fileDir + "\\res\\values\\strings.xml", returnValue);
-			// µÚÒ»¸öÖµÎªvalueÏÂstringµÄÄ¿Â¼£¬µÚ¶ş¸öÖµÎªappid
-			// ±à¼­app_idµÄÖµ+/
+			// ç¬¬ä¸€ä¸ªå€¼ä¸ºvalueä¸‹stringçš„ç›®å½•ï¼Œç¬¬äºŒä¸ªå€¼ä¸ºappid
+			// ç¼–è¾‘app_idçš„å€¼+/
 		}
-		// dom4j³öÏÖÎÊÌâ£¬´ı¸Ä
-		// Èç¹ûÃ»ÓĞ£¬Ö±½Ó±à¼­smali
+		// dom4jå‡ºç°é—®é¢˜ï¼Œå¾…æ”¹
+		//å·²è§£å†³
+		// å¦‚æœæ²¡æœ‰ï¼Œç›´æ¥ç¼–è¾‘smali
 		String PackageName = edi.getPackageName();
 		String MainActivity = edi.getMainActivity(fileDir
 				+ "\\Androidmanifest.xml");
@@ -36,9 +37,9 @@ public class Mian {
 		} else {
 			MainActivity = PackageName + "." + MainActivity;
 		}
-		String activityDir = eds.dotToDir(MainActivity);// ½«³ÌĞòÈë¿Ú¸Ä³ÉÄ¿Â¼
-		eds.smaliEdit(fileDir + "\\smali\\" + activityDir + ".smali");// ±à¼­smali
-		zip.zippo(fileDir);// ´ò°ü
+		String activityDir = eds.dotToDir(MainActivity);// å°†ç¨‹åºå…¥å£æ”¹æˆç›®å½•
+		eds.smaliEdit(fileDir + "\\smali\\" + activityDir + ".smali");// ç¼–è¾‘smali
+		zip.zippo(fileDir);// æ‰“åŒ…
 		File apkNeedSign = new File(fileDir + "\\dist\\" + fileName);
 		apkNeedSign.renameTo(new File(".", "unsigned_" + fileName));
 		apkNeedSign.delete();
